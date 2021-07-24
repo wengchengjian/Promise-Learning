@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.0.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <h2 class="page-header">Promise 初体验</h2>
+        <button class="btn btn-primary" id="btn">点击模拟ajax请求</button>
+    </div>
+    <script>
+        const btn = document.querySelector('#btn');
+        btn.addEventListener('click', function() {
+            // const xhr = new XMLHttpRequest();
+
+            // xhr.open('get', 'https://api.apiopen.top/getJoke');
+
+            // xhr.send();
+
+            // xhr.addEventListener('readystatechange', function() {
+            //     if (xhr.readyState === 4) {
+            //         if (xhr.status >= 200 && xhr.status < 300) {
+            //             console.log(xhr.response);
+            //         } else {
+            //             console.log(xhr.status);
+            //         }
+            //     }
+            // })
+            const p = new Promise((resolve, reject) => {
+                const xhr = new XMLHttpRequest();
+
+                xhr.open('get', 'https://api.apiopen.top/getJoke');
+
+                xhr.send();
+
+                xhr.addEventListener('readystatechange', () => {
+                    if (xhr.readyState === 4) {
+                        if (xhr.status >= 200 && xhr.status < 300) {
+                            resolve(xhr.response)
+                        } else {
+                            reject(xhr.status);
+                        }
+                    }
+                });
+            });
+            p.then(value => {
+                console.log(value);
+            }, err => {
+                console.log(err);
+            });
+        });
+    </script>
+</body>
+
+</html>
